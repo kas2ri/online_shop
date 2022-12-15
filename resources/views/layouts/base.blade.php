@@ -203,6 +203,12 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+             <li class="nav-item {{ request()->is('products/category/*')  ? 'active' : '' }}">
+                <a href="{{url('products/category')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Category</p>
+                </a>
+              </li>
               <li class="nav-item {{ request()->is('products/create-new/*')  ? 'active' : '' }}">
                 <a href="{{url('products/create-new')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>

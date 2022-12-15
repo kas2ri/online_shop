@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -78,9 +79,15 @@ class ProductController extends Controller
         $product->image1=$image1;
         $product->image2=$image2;
         $product->image3=$image3;
-        $product->image=$image4;
+        $product->image4=$image4;
         $product->created_by=Auth::user()->id;
         $product->save();
-
+        $product_history = new ProductHistory();
+        $product_history->product_id = $product->id;
+        $product_history->action= 'Create new product';
+        $product_history->price= $request->price;
+        $product_history->user= Auth::user()->id;
+        $product_history->save();
+        return back()->with('status', 'Product Save');
     }
 }

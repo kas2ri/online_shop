@@ -25,3 +25,4 @@ Route::post('/products/category-save', [App\Http\Controllers\ProductController::
 Route::get('/products/category-deactivate/{id}', [App\Http\Controllers\ProductController::class, 'categoryDeactivate'])->middleware('auth');
 Route::get('/products/category-activate/{id}', [App\Http\Controllers\ProductController::class, 'categoryActivate'])->middleware('auth');
 Route::get('/products/create-new', [App\Http\Controllers\ProductController::class, 'createUI'])->middleware('auth');
+Route::post('/products/save', [App\Http\Controllers\ProductController::class, 'saveProduct'])->middleware('auth');

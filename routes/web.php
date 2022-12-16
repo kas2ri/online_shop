@@ -26,3 +26,8 @@ Route::get('/products/category-deactivate/{id}', [App\Http\Controllers\ProductCo
 Route::get('/products/category-activate/{id}', [App\Http\Controllers\ProductController::class, 'categoryActivate'])->middleware('auth');
 Route::get('/products/create-new', [App\Http\Controllers\ProductController::class, 'createUI'])->middleware('auth');
 Route::post('/products/save', [App\Http\Controllers\ProductController::class, 'saveProduct'])->middleware('auth');
+Route::get('/products/all', [App\Http\Controllers\ProductController::class, 'allProduct'])->middleware('auth');
+Route::get('/products/deactivate/{id}', [App\Http\Controllers\ProductController::class, 'productDeactivate'])->middleware('auth');
+Route::get('/products/activate/{id}', [App\Http\Controllers\ProductController::class, 'productActivate'])->middleware('auth');
+Route::get('/products/edit/{id}', [App\Http\Controllers\ProductController::class, 'edit'])->middleware('auth');
+Route::post('/products/update/{id}', [App\Http\Controllers\ProductController::class, 'update'])->middleware('auth');

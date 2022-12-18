@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('admin', function () {
     return view('auth.login');
 });
 
@@ -31,3 +31,14 @@ Route::get('/products/deactivate/{id}', [App\Http\Controllers\ProductController:
 Route::get('/products/activate/{id}', [App\Http\Controllers\ProductController::class, 'productActivate'])->middleware('auth');
 Route::get('/products/edit/{id}', [App\Http\Controllers\ProductController::class, 'edit'])->middleware('auth');
 Route::post('/products/update/{id}', [App\Http\Controllers\ProductController::class, 'update'])->middleware('auth');
+
+//site urls
+Route::get('/', [App\Http\Controllers\SiteController::class, 'index']);
+Route::get('/view-single-item/{id}', [App\Http\Controllers\SiteController::class, 'viewSingleItem']);
+Route::get('/items-all', [App\Http\Controllers\SiteController::class, 'viewAllItem']);
+Route::get('/contact-us', [App\Http\Controllers\SiteController::class, 'contactUs']);
+Route::post('/add-to-cart', [App\Http\Controllers\SiteController::class, 'addToCart']);
+Route::get('/view-cart', [App\Http\Controllers\SiteController::class, 'viewCart']);
+Route::post('/update-cart', [App\Http\Controllers\SiteController::class, 'updateCart']);
+Route::get('/remove-cart/{id}', [App\Http\Controllers\SiteController::class, 'removeCart']);
+Route::get('/order-checkout', [App\Http\Controllers\SiteController::class, 'checkout']);

@@ -34,7 +34,7 @@
                                 <td>{{$product->title}}</td>
                                 <td>
                                     @php
-                                        $category = App\Models\Category::where('id',$product->id)->first();
+                                        $category = App\Models\Category::where('id',$product->category)->first();
                                     @endphp
                                     {{$category->name}}
                                 </td>

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class SiteController extends Controller
 {
@@ -97,5 +100,51 @@ class SiteController extends Controller
         $items = \Cart::getContent();
         $cartTotal=\Cart::getTotal();
         return view('site.checkout',compact('items','cartTotal'));
+    }
+    public function orderConfirm(Request $request){
+
+
+        //output: P00001
+        if($request->payment =='card'){
+            $payment_status='paid';
+
+        }else{
+            $payment_status='pending';
+
+        }
+        $subtotal =\Cart::getTotal();
+            $order_name = IdGenerator::generate(['table' => 'orders','field'=>'order_name', 'length' => 11, 'prefix' =>'LB-']);
+            $order = new Order();
+            $order->order_name=$order_name;
+            $order->status ='pending';
+            $order->subtotal =$subtotal;
+            $order->total =$subtotal;
+            $order->payment_status =$payment_status;
+            $order->first_name =$request->first_name;
+            $order->last_name =$request->last_name;
+            $order->email =$request->email;
+            $order->phone =$request->phone;
+            $order->address1 =$request->address1;
+            $order->address2 =$request->address2;
+            $order->state =$request->state;
+            $order->zip =$request->zip;
+            $order->save();
+            $items = \Cart::getContent();
+
+            foreach($items as $item){
+                $itemTotal = \Cart::get($item->id)->getPriceSum();
+                $itemData = new OrderItem();
+                $itemData->order_id= $order->id;
+                $itemData->product_id= $item->id;
+                $itemData->title= $item->name;
+                $itemData->price= $item->price;
+                $itemData->quantity= $item->quantity;
+                $itemData->total= $itemTotal;
+                $itemData->save();
+            }
+
+
+           \Cart::clear();
+           return back();
     }
 }

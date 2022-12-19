@@ -42,3 +42,4 @@ Route::get('/view-cart', [App\Http\Controllers\SiteController::class, 'viewCart'
 Route::post('/update-cart', [App\Http\Controllers\SiteController::class, 'updateCart']);
 Route::get('/remove-cart/{id}', [App\Http\Controllers\SiteController::class, 'removeCart']);
 Route::get('/order-checkout', [App\Http\Controllers\SiteController::class, 'checkout']);
+Route::post('/order-confirm', [App\Http\Controllers\SiteController::class, 'orderConfirm']);

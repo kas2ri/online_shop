@@ -32,6 +32,8 @@ Route::get('/products/activate/{id}', [App\Http\Controllers\ProductController::c
 Route::get('/products/edit/{id}', [App\Http\Controllers\ProductController::class, 'edit'])->middleware('auth');
 Route::post('/products/update/{id}', [App\Http\Controllers\ProductController::class, 'update'])->middleware('auth');
 
+Route::get('/orders/all-orders', [App\Http\Controllers\OrderController::class, 'allOrdrs']);
+
 //site urls
 Route::get('/', [App\Http\Controllers\SiteController::class, 'index']);
 Route::get('/view-single-item/{id}', [App\Http\Controllers\SiteController::class, 'viewSingleItem']);
@@ -43,3 +45,5 @@ Route::post('/update-cart', [App\Http\Controllers\SiteController::class, 'update
 Route::get('/remove-cart/{id}', [App\Http\Controllers\SiteController::class, 'removeCart']);
 Route::get('/order-checkout', [App\Http\Controllers\SiteController::class, 'checkout']);
 Route::post('/order-confirm', [App\Http\Controllers\SiteController::class, 'orderConfirm']);
+
+

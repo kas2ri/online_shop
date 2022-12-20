@@ -128,6 +128,7 @@ class SiteController extends Controller
             $order->address2 =$request->address2;
             $order->state =$request->state;
             $order->zip =$request->zip;
+            $order->gateway =$request->payment;
             $order->save();
             $items = \Cart::getContent();
 

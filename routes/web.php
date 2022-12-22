@@ -33,6 +33,10 @@ Route::get('/products/edit/{id}', [App\Http\Controllers\ProductController::class
 Route::post('/products/update/{id}', [App\Http\Controllers\ProductController::class, 'update'])->middleware('auth');
 
 Route::get('/orders/all-orders', [App\Http\Controllers\OrderController::class, 'allOrdrs']);
+Route::get('/order-confirm/{id}', [App\Http\Controllers\OrderController::class, 'orderConfime']);
+Route::post('/add-comment/{id}', [App\Http\Controllers\OrderController::class, 'orderComment']);
+
+Route::get('/orders/handover', [App\Http\Controllers\OrderController::class, 'orderHandover']);
 
 //site urls
 Route::get('/', [App\Http\Controllers\SiteController::class, 'index']);
@@ -45,5 +49,6 @@ Route::post('/update-cart', [App\Http\Controllers\SiteController::class, 'update
 Route::get('/remove-cart/{id}', [App\Http\Controllers\SiteController::class, 'removeCart']);
 Route::get('/order-checkout', [App\Http\Controllers\SiteController::class, 'checkout']);
 Route::post('/order-confirm', [App\Http\Controllers\SiteController::class, 'orderConfirm']);
+
 
 

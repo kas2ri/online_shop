@@ -255,6 +255,12 @@
                                         <p>All Orders</p>
                                     </a>
                                 </li>
+                                <li class="nav-item {{ request()->is('orders/handover/*') ? 'active' : '' }}">
+                                    <a href="{{ url('orders/handover') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Handover Orders</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
 

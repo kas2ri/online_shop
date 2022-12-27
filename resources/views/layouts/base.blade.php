@@ -261,6 +261,12 @@
                                         <p>Handover Orders</p>
                                     </a>
                                 </li>
+                                <li class="nav-item {{ request()->is('orders/status/*') ? 'active' : '' }}">
+                                    <a href="{{ url('orders/status') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Mark Status</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
 

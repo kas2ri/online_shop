@@ -7,6 +7,8 @@ use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
+use  DB;
+use Svg\Tag\Rect;
 
 class SiteController extends Controller
 {
@@ -31,6 +33,19 @@ class SiteController extends Controller
         $products = Product::paginate(9);
         }
         return view('site.all_items',compact('products','title'));
+    }
+
+    public function viewCategoryItem(Request $request,$id)
+    {
+
+        if($request->title){
+            $title=$request->title;
+            $products = Product::where('title','like',"%".$title."%")->where('category',$id)->paginate(9);
+        }else{
+            $title=null;
+        $products = Product::where('category',$id)->paginate(9);
+        }
+        return view('site.category_items',compact('products','title','id'));
     }
     public function contactUs()
     {
@@ -113,12 +128,13 @@ class SiteController extends Controller
 
         }
         $subtotal =\Cart::getTotal();
+        $total =(float)$subtotal +(float)$request->shipping;
             $order_name = IdGenerator::generate(['table' => 'orders','field'=>'order_name', 'length' => 11, 'prefix' =>'LB-']);
             $order = new Order();
             $order->order_name=$order_name;
             $order->status ='pending';
             $order->subtotal =$subtotal;
-            $order->total =$subtotal;
+            $order->total =$total;
             $order->payment_status =$payment_status;
             $order->first_name =$request->first_name;
             $order->last_name =$request->last_name;
@@ -128,6 +144,7 @@ class SiteController extends Controller
             $order->address2 =$request->address2;
             $order->state =$request->state;
             $order->zip =$request->zip;
+            $order->shipping =$request->shipping;
             $order->gateway =$request->payment;
             $order->save();
             $items = \Cart::getContent();
@@ -147,5 +164,52 @@ class SiteController extends Controller
 
            \Cart::clear();
            return back();
+    }
+
+    public  function Searchcity(Request  $request)
+    {
+        $output=null;
+        $cities= DB::table('cities')->where("name_en", 'like', '%'.$request->city.'%')->get();
+
+
+        if (count($cities)>0) {
+
+            $output = '<ul class="list-group" style=" ;display: block; position: relative; z-index: 1" id="invoice_ul">';
+
+            foreach ($cities as $row){
+
+
+                $output .= '<li style="background:#fff;" class="list-group-item" id="'.$row->id.'">'.$row->name_en.'</li>';
+            }
+
+            $output .= '</ul>';
+        }
+        else {
+
+            $output .= '<li class="list-group-item" id="0">'.'No result'.'</li>';
+        }
+
+        return $output;
+    }
+    public function Searchrate(Request $request)
+    {
+        $city = DB::table('cities')->where('id',$request->id)->first();
+        if($city){
+            $found =true;
+        $rate = $city->shipping_rate;
+        $max_days =$city->max_days;
+        $min_days =$city->min_days;
+        }else{
+            $found =false;
+            $rate ='0.00';
+            $max_days ='0';
+            $min_days ='0';
+        }
+        return response()->json([
+            'found'=>$found,
+            'rate'=>$rate,
+            'max_days'=>$max_days,
+            'min_days'=>$min_days
+        ]);
     }
 }

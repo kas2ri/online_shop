@@ -13,7 +13,7 @@
             <div class="row pb-3">
                 <div class="col-12 pb-1">
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <form action="{{url('items-all')}}" method="GET">
+                        <form action="{{url('/items-category/'.$id)}}" method="GET">
                             <div class="input-group">
                                 <input type="text" class="form-control" name="title" value="{{$title}}" placeholder="Search by name">
                                 <button type="submit">

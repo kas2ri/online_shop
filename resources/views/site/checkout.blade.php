@@ -36,7 +36,8 @@
 
                     <div class="col-md-6 form-group">
                         <label>City</label>
-                        <input class="form-control" name="city" type="text" placeholder="New York" required>
+                        <input class="form-control" name="city" list="cities" placeholder="New York" id="cities" required>
+                        <div id="city_list"></div>
                     </div>
                     <div class="col-md-6 form-group">
                         <label>State</label>
@@ -76,15 +77,20 @@
                         <h6 class="font-weight-medium">Subtotal</h6>
                         <h6 class="font-weight-medium">LKR {{number_format($cartTotal,2)}}</h6>
                     </div>
-                    {{--  <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between">
                         <h6 class="font-weight-medium">Shipping</h6>
-                        <h6 class="font-weight-medium">$10</h6>
-                    </div>  --}}
+                        <input type="hidden" name="shipping" id="shipping_value">
+                        <h6 class="font-weight-medium" id="shipping_total">0.00</h6>
+                    </div>
+                    <div class="alert alert-danger" id="date-message" style="display:none" role="alert">
+                        This is a danger alert—check it out!
+                      </div>
                 </div>
                 <div class="card-footer border-secondary bg-transparent">
                     <div class="d-flex justify-content-between mt-2">
                         <h5 class="font-weight-bold">Total</h5>
-                        <h5 class="font-weight-bold">LKR {{number_format($cartTotal,2)}}</h5>
+                    <input type="hidden"  id="total_value" value="{{$cartTotal}}">
+                        <h5 class="font-weight-bold" id="order_total">LKR {{number_format($cartTotal,2)}}</h5>
                     </div>
                 </div>
             </div>
@@ -116,4 +122,61 @@
 </form>
 </div>
 
+@endsection
+@section('scripts')
+<script>
+    $(document).ready(function () {
+		$('#cities').on('keyup',function() {
+			var city = $(this).val();
+
+			$.ajax({
+
+				url:"{{url('/search-city') }}",
+
+				type:"GET",
+
+				data:{'city':city},
+
+				success:function (data) {
+
+
+
+					$('#city_list').html(data);
+				}
+			})
+			// end of ajax call
+		});
+	});
+	$(document).on('click', 'li', function(){
+		var value = $(this).text();
+        var id = $(this).attr('id');
+        console.log(id);
+        $.ajax({
+
+            url:"{{url('/search-rate') }}",
+
+            type:"GET",
+
+            data:{'id':id},
+
+            success:function (data) {
+                console.log(data);
+                if(data.found == true){
+                document.getElementById("shipping_total").innerHTML='LKR '+data.rate.toFixed(2) ;
+                document.getElementById("shipping_value").value=data.rate;
+                var old_total =document.getElementById("total_value").value;
+                var newTotal = parseFloat(old_total)+parseFloat(data.rate);
+                document.getElementById("order_total").innerHTML='LKR '+newTotal.toFixed(2) ;
+                document.getElementById("date-message").innerHTML='Your delivery will take '+data.min_days+'-'+data.max_days+' days' ;
+                document.getElementById("date-message").style.display='block';
+                }
+
+            }
+        })
+
+		$('#cities').val(value);
+		$('#city_list').html("");
+
+	});
+</script>
 @endsection

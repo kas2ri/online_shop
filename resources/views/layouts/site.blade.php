@@ -107,7 +107,7 @@
                         @endphp
 
                         @foreach ($categories as $category)
-                        <a href="" class="nav-item nav-link">{{$category->name}}</a>
+                        <a href="{{url('items-category/'.$category->id)}}" class="nav-item nav-link">{{$category->name}}</a>
                         @endforeach
 
                 </nav>
@@ -216,6 +216,7 @@
 
     <!-- Template Javascript -->
     <script src="{{url('site/js/main.js')}}"></script>
+    @yield('scripts')
 </body>
 
 </html>

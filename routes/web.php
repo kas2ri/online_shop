@@ -32,16 +32,21 @@ Route::get('/products/activate/{id}', [App\Http\Controllers\ProductController::c
 Route::get('/products/edit/{id}', [App\Http\Controllers\ProductController::class, 'edit'])->middleware('auth');
 Route::post('/products/update/{id}', [App\Http\Controllers\ProductController::class, 'update'])->middleware('auth');
 
-Route::get('/orders/all-orders', [App\Http\Controllers\OrderController::class, 'allOrdrs']);
-Route::get('/order-confirm/{id}', [App\Http\Controllers\OrderController::class, 'orderConfime']);
-Route::post('/add-comment/{id}', [App\Http\Controllers\OrderController::class, 'orderComment']);
+Route::get('/orders/all-orders', [App\Http\Controllers\OrderController::class, 'allOrdrs'])->middleware('auth');
+Route::get('/order-confirm/{id}', [App\Http\Controllers\OrderController::class, 'orderConfime'])->middleware('auth');
+Route::post('/add-comment/{id}', [App\Http\Controllers\OrderController::class, 'orderComment'])->middleware('auth');
 
-Route::get('/orders/handover', [App\Http\Controllers\OrderController::class, 'orderHandover']);
+Route::get('/orders/handover', [App\Http\Controllers\OrderController::class, 'orderHandover'])->middleware('auth');
+Route::get('/order-invoice/{id}', [App\Http\Controllers\OrderController::class, 'orderInvoice'])->middleware('auth');
+Route::get('/order-handover/{id}', [App\Http\Controllers\OrderController::class, 'orderHandoverConfirm'])->middleware('auth');
+Route::get('/orders/status', [App\Http\Controllers\OrderController::class, 'orderStatus'])->middleware('auth');
+Route::get('/orders-status-mark/{id}', [App\Http\Controllers\OrderController::class, 'orderStatusMark'])->middleware('auth');
 
 //site urls
 Route::get('/', [App\Http\Controllers\SiteController::class, 'index']);
 Route::get('/view-single-item/{id}', [App\Http\Controllers\SiteController::class, 'viewSingleItem']);
 Route::get('/items-all', [App\Http\Controllers\SiteController::class, 'viewAllItem']);
+Route::get('/items-category/{id}', [App\Http\Controllers\SiteController::class, 'viewCategoryItem']);
 Route::get('/contact-us', [App\Http\Controllers\SiteController::class, 'contactUs']);
 Route::post('/add-to-cart', [App\Http\Controllers\SiteController::class, 'addToCart']);
 Route::get('/view-cart', [App\Http\Controllers\SiteController::class, 'viewCart']);
@@ -49,6 +54,7 @@ Route::post('/update-cart', [App\Http\Controllers\SiteController::class, 'update
 Route::get('/remove-cart/{id}', [App\Http\Controllers\SiteController::class, 'removeCart']);
 Route::get('/order-checkout', [App\Http\Controllers\SiteController::class, 'checkout']);
 Route::post('/order-confirm', [App\Http\Controllers\SiteController::class, 'orderConfirm']);
-
+Route::get('/search-city', [App\Http\Controllers\SiteController::class, 'Searchcity']);
+Route::get('/search-rate', [App\Http\Controllers\SiteController::class, 'Searchrate']);
 
 

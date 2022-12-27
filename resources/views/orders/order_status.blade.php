@@ -170,11 +170,11 @@ img{ max-width:100%;}
                                         <td><span class="badge badge-info">{{ $order->payment_status }}</span></td>
                                         <td><span class="badge badge-warning">{{ $order->gateway }}</span></td>
                                         <td>
-                                          <a href="{{url('order-invoice/'.$order->id)}}" class="btn btn-danger" target="_blank">Invoice</a>
+
 
                                             <button type="button" class="btn btn-primary" data-toggle="modal"
                                                 data-target="#exampleModalCenter{{ $order->id }}">
-                                                HandOver
+                                                Mark as Delivered
                                             </button>
 
                                             <!-- Modal -->
@@ -184,70 +184,80 @@ img{ max-width:100%;}
                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLongTitle">Items</h5>
+                                                            <h5 class="modal-title" id="exampleModalLongTitle">Mark As Delivered</h5>
                                                             <button type="button" class="close" data-dismiss="modal"
                                                                 aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
+                                                        <form action="{{url('orders-status-mark')}}">
                                                         <div class="modal-body">
-                                                            @php
-                                                                $items = App\Models\OrderItem::where('order_id', $order->id)->get();
-                                                            @endphp
-                                                            <div class="row">
-                                                                <table class="table table-striped">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th scope="col">Name</th>
-                                                                            <th scope="col">Price</th>
-                                                                            <th scope="col">Quantity</th>
-                                                                            <th scope="col">Total</th>
-
-
-
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        @foreach ($items as $item)
-                                                                            <tr>
-                                                                                <td>{{ $item->title }}</td>
-                                                                                <td>{{ number_format($item->price, 2) }}
-                                                                                </td>
-                                                                                <td>{{ $item->quantity }}</td>
-                                                                                <td>{{ number_format($item->total, 2) }}
-                                                                                </td>
-                                                                            </tr>
-                                                                        @endforeach
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                            <div class="row">
-                                                                @php
-                                                                $comments = App\Models\Comment::where('order_id', $order->id)->get();
-                                                            @endphp
-
-                                                                        @foreach ($comments as $comment)
-                                                                        <div class="outgoing_msg">
-                                                                            <div class="sent_msg">
-                                                                              <p><strong>{{ucfirst($comment->comment)}}-{{$comment->created_at}}</strong>
-
-                                                                              </i></p>
-                                                                              <span class="time_date"> </span> </div>
-                                                                          </div>
-                                                                        @endforeach
-
-                                                            </div>
+                                                          @if($order->payment_status == 'pending')
+                                                          <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="" required>
+                                                            <label class="form-check-label" for="defaultCheck1" >
+                                                              Payment  Recieved
+                                                            </label>
+                                                          </div>
+                                                          @endif
+                                                          Do you want to mark this  order as delivered?
+                                                          <input type="hidden" name="status" value="delivered">
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary"
                                                                 data-dismiss="modal">No</button>
-                                                            <a type="button" href="{{ url('order-handover/' . $order->id) }}"
-                                                                class="btn btn-primary">handover</a>
+                                                            <button type="submit"
+                                                                class="btn btn-primary">Yes</button>
                                                         </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <button type="button" class="btn btn-danger" data-toggle="modal"
+                                            data-target="#exampleModalCenter2{{ $order->id }}">
+                                            Return
+                                        </button>
 
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModalCenter2{{ $order->id }}"
+                                            tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLongTitle">Mark As Returned</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <form action="{{url('orders-status-mark/'.$order->id)}}">
+                                                    <div class="modal-body">
+                                                      @if($order->payment_status == 'paid')
+                                                      <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value="" required>
+                                                        <label class="form-check-label" for="defaultCheck1" >
+                                                          Payment  Returned
+                                                        </label>
+                                                      </div>
+                                                      @endif
+                                                      <div class="form-group">
+                                                        <label for="exampleFormControlTextarea1">Reason</label>
+                                                        <textarea class="form-control" id="exampleFormControlTextarea1" name="reason" rows="3" required></textarea>
+                                                      </div>
+                                                      Do you want to mark this  order as returned?
+                                                      <input type="hidden" name="status" value="returned">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">No</button>
+                                                        <button type="submit"
+                                                            class="btn btn-primary">Yes</button>
+                                                    </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                         </td>
                                     </tr>
                                 @endforeach

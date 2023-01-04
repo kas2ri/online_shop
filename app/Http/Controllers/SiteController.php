@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use  DB;
@@ -14,8 +15,9 @@ class SiteController extends Controller
 {
     //
     public function index(){
+        $home=true;
         $products=Product::limit(8)->get();
-        return view('site.index',compact('products'));
+        return view('site.index',compact('products','home'));
     }
     public function viewSingleItem($id){
         $product = Product::where('id',$id)->first();
@@ -27,10 +29,10 @@ class SiteController extends Controller
 
         if($request->title){
             $title=$request->title;
-            $products = Product::where('title','like',"%".$title."%")->paginate(9);
+            $products = Product::where('title','like',"%".$title."%")->paginate(6);
         }else{
             $title=null;
-        $products = Product::paginate(9);
+        $products = Product::paginate(6);
         }
         return view('site.all_items',compact('products','title'));
     }
@@ -211,5 +213,17 @@ class SiteController extends Controller
             'max_days'=>$max_days,
             'min_days'=>$min_days
         ]);
+    }
+    public function ReviewStore(Request $request,$id)
+    {
+        //dd($request->all());
+        $data= new Review();
+        $data->product_id=$id;
+        $data->rate=$request->rating;
+        $data->name=$request->name;
+        $data->email=$request->email;
+        $data->message=$request->message;
+        $data->save();
+        return back();
     }
 }

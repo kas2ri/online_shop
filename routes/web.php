@@ -56,5 +56,6 @@ Route::get('/order-checkout', [App\Http\Controllers\SiteController::class, 'chec
 Route::post('/order-confirm', [App\Http\Controllers\SiteController::class, 'orderConfirm']);
 Route::get('/search-city', [App\Http\Controllers\SiteController::class, 'Searchcity']);
 Route::get('/search-rate', [App\Http\Controllers\SiteController::class, 'Searchrate']);
+Route::post('/add-review/{id}', [App\Http\Controllers\SiteController::class, 'ReviewStore']);
 
 

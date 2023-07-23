@@ -28,9 +28,9 @@
                                     <i class="fa fa-minus"></i>
                                     </button>
                                 </div>
-                                <input type="text" class="form-control form-control-sm bg-secondary text-center"  id="itemCount{{$item->id}}" value="{{$item->quantity}}">
+                                <input type="text" class="form-control form-control-sm bg-secondary text-center" style="height: 30px;"  id="itemCount{{$item->id}}" value="{{$item->quantity}}">
                                 <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-plus"onclick="addCart({{$item->id}})">
+                                    <button class="btn btn-sm btn-primary btn-plus" onclick="addCart({{$item->id}})">
                                         <i class="fa fa-plus"></i>
                                     </button>
                                 </div>

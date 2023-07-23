@@ -17,18 +17,29 @@
                                         placeholder="Tile" required>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputPassword4">Cateory*</label>
-                                    <select class="form-control" name="category" required>
-                                        @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    <label for="inputPassword4">Subject*</label>
+                                    <select class="form-control" name="subject" required>
+                                        @foreach ($subjects as $subject)
+                                            <option value="{{ $subject->id }}">{{ $subject->name }}</option>
                                         @endforeach
 
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-row">
+                            <div class="form-group col-md-6">
                                 <label for="inputAddress">Description</label>
                                 <textarea class="form-control" name="description"></textarea>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputPassword4">Lesson*</label>
+                                <select class="form-control" name="lesson" required>
+                                    @foreach ($lessons as $lesson)
+                                        <option value="{{ $lesson->id }}">{{ $lesson->name }}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
                             </div>
 
                             <div class="form-row">
@@ -38,8 +49,8 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="inputZip">Weight</label>
-                                    <input type="text" name="weight" class="form-control" id="inputZip">
+                                    <label for="inputZip">Available QTY</label>
+                                    <input type="number" name="qty" class="form-control" id="inputZip" value="0" min="0">
                                 </div>
                             </div>
                             <div class="form-row">
@@ -54,50 +65,8 @@
 
 
                             </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label for="inputCity">Image 1</label>
-                                    <div class="custom-file">
-                                        <input type="file" name="image1" class="custom-file-input" id="customFile">
-                                        <label class="custom-file-label" for="customFile">Choose file</label>
-                                    </div>
-                                </div>
 
 
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label for="inputCity">Image 2</label>
-                                    <div class="custom-file">
-                                        <input type="file" name="image2" class="custom-file-input" id="customFile">
-                                        <label class="custom-file-label" for="customFile">Choose file</label>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label for="inputCity">Image 3</label>
-                                    <div class="custom-file">
-                                        <input type="file" name="image3" class="custom-file-input" id="customFile">
-                                        <label class="custom-file-label" for="customFile">Choose file</label>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label for="inputCity">Image 4</label>
-                                    <div class="custom-file">
-                                        <input type="file" name="image4" class="custom-file-input" id="customFile">
-                                        <label class="custom-file-label" for="customFile">Choose file</label>
-                                    </div>
-                                </div>
-
-
-                            </div>
 
                             <button type="submit" class="btn btn-primary">Create</button>
                         </form>

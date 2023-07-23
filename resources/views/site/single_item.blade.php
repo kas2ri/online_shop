@@ -113,7 +113,7 @@
                         <i class="fa fa-minus"></i>
                         </button>
                     </div>
-                    <input type="text" class="form-control bg-secondary text-center" value="1" id="singleItemCount">
+                    <input type="text" class="form-control bg-secondary text-center" style="height: 30px;" value="1" id="singleItemCount">
                     <div class="input-group-btn">
                         <button class="btn btn-primary btn-plus">
                             <i class="fa fa-plus"></i>

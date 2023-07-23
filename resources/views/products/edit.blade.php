@@ -17,19 +17,32 @@
                                         placeholder="Tile" value="{{$product->title}}" required>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputPassword4">Cateory*</label>
-                                    <select class="form-control" name="category" required>
-                                        @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}" {{$product->category == $category->id ? 'selected' : ''}}>{{ $category->name }}</option>
+                                    <label for="inputPassword4">Subject*</label>
+                                    <select class="form-control" name="subject" required>
+                                        @foreach ($subjects as $subject)
+                                            <option value="{{ $subject->id }}" {{$product->subject == $subject->id ? 'selected' : ''}}>{{ $subject->name }}</option>
                                         @endforeach
 
                                     </select>
+
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-row">
+                            <div class="form-group col-md-6">
                                 <label for="inputAddress">Description</label>
                                 <textarea class="form-control" name="description">{{$product->description}}</textarea>
                             </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputPassword4">Lesson*</label>
+                                <select class="form-control" name="lesson" required>
+                                    @foreach ($lessons as $lesson)
+                                        <option value="{{ $lesson->id }}" {{$product->lesson == $lesson->id ? 'selected' : ''}}>{{ $lesson->name }}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                            </div>
+
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
@@ -38,8 +51,8 @@
                                 </div>
 
                                 <div class="form-group col-md-6">
-                                    <label for="inputZip">Weight</label>
-                                    <input type="text" name="weight" value="{{$product->weight}}" class="form-control" id="inputZip">
+                                    <label for="inputZip">Available QTY</label>
+                                    <input type="number" name="qty" value="{{$product->qty}}" min="0" class="form-control" id="inputZip">
                                 </div>
                             </div>
                             <div class="form-row">
@@ -57,73 +70,7 @@
 
 
                             </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-8">
-                                    <label for="inputCity">Image 1</label>
-                                    <div class="custom-file">
-                                        <input type="file" name="image1" class="custom-file-input" id="customFile">
-                                        <label class="custom-file-label" for="customFile">Choose file</label>
-                                    </div>
-                                </div>
-                                @if ($product->image1 != null)
-                                <div class="form-group col-md-4">
-                                    <img src="{{url('image1/'.$product->image1)}}" style="width:80px">
-                                </div>
 
-                                @endif
-
-
-
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-8">
-                                    <label for="inputCity">Image 2</label>
-                                    <div class="custom-file">
-                                        <input type="file" name="image2" class="custom-file-input" id="customFile">
-                                        <label class="custom-file-label" for="customFile">Choose file</label>
-                                    </div>
-                                </div>
-                                @if ($product->image2 != null)
-                                <div class="form-group col-md-4">
-                                    <img src="{{url('image2/'.$product->image2)}}" style="width:80px">
-                                </div>
-
-                                @endif
-
-
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-8">
-                                    <label for="inputCity">Image 3</label>
-                                    <div class="custom-file">
-                                        <input type="file" name="image3" class="custom-file-input" id="customFile">
-                                        <label class="custom-file-label" for="customFile">Choose file</label>
-                                    </div>
-                                </div>
-
-                                @if ($product->image3 != null)
-                                <div class="form-group col-md-4">
-                                    <img src="{{url('image3/'.$product->image3)}}" style="width:80px">
-                                </div>
-
-                                @endif
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-8">
-                                    <label for="inputCity">Image 4</label>
-                                    <div class="custom-file">
-                                        <input type="file" name="image4" class="custom-file-input" id="customFile">
-                                        <label class="custom-file-label" for="customFile">Choose file</label>
-                                    </div>
-                                </div>
-                                @if ($product->image4 != null)
-                                <div class="form-group col-md-4">
-                                    <img src="{{url('image4/'.$product->image4)}}" style="width:80px">
-                                </div>
-
-                                @endif
-
-                            </div>
 
                             <button type="submit" class="btn btn-primary">Update</button>
                         </form>

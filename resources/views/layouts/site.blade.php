@@ -33,7 +33,8 @@
         <div class="row align-items-center py-3 px-xl-5">
             <div class="col-lg-3 d-none d-lg-block">
                 <a href="{{url('/')}}" class="text-decoration-none">
-                    <img src="{{url('site/img/logo.png')}}" width="100%">
+                    {{--  <img src="{{url('site/img/logo.png')}}" width="100%">  --}}
+                    <h1>LOGO</h1>
 
                 </a>
             </div>
@@ -51,7 +52,7 @@
             </div>
             <div class="col-lg-3 col-6 text-right">
                 @php
-                    $cart_count =\ Cart::getTotalQuantity();
+                    $cart_count =\Cart::getTotalQuantity();
                 @endphp
 
                 <a href="{{url('/view-cart')}}" class="btn border">
@@ -65,50 +66,30 @@
 
 
     <!-- Navbar Start -->
-    <div class="container-fluid mb-5">
-        <div class="row border-top px-xl-5">
-            @if(isset($home))
+    <div class="container-fluid bg-dark mb-30">
+        <div class="row px-xl-5">
             <div class="col-lg-3 d-none d-lg-block">
-
-                <a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; margin-top: -1px; padding: 0 30px;">
-                    <h6 class="m-0">Categories</h6>
+                <a class="btn d-flex align-items-center justify-content-between bg-primary w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; padding: 0 30px;">
+                    <h6 class="text-dark m-0"><i class="fa fa-bars mr-2"></i>Categories</h6>
                     <i class="fa fa-angle-down text-dark"></i>
                 </a>
-                <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
-                    <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
+                <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
+                    <div class="navbar-nav w-100">
                         @php
-                        $categories = App\Models\Category::where('status', 0)->get();
+                        $subjects = App\Models\Subject::where('status', 0)->get();
                         @endphp
 
-                        @foreach ($categories as $category)
-                        <a href="{{url('items-category/'.$category->id)}}" class="nav-item nav-link">{{$category->name}}</a>
+                        @foreach ($subjects as $subject)
+                        <a href="{{url('items-subject/'.$subject->id)}}" class="nav-item nav-link">{{$subject->name}}</a>
                         @endforeach
-
+                    </div>
                 </nav>
             </div>
-            @else
-            <div class="col-lg-3 d-none d-lg-block">
-                <a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; margin-top: -1px; padding: 0 30px;">
-                    <h6 class="m-0">Categories</h6>
-                    <i class="fa fa-angle-down text-dark"></i>
-                </a>
-                <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1;">
-                    <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
-                        @php
-                        $categories = App\Models\Category::where('status', 0)->get();
-                        @endphp
-
-                        @foreach ($categories as $category)
-                        <a href="{{url('items-category/'.$category->id)}}" class="nav-item nav-link">{{$category->name}}</a>
-                        @endforeach
-
-                </nav>
-            </div>
-            @endif
             <div class="col-lg-9">
-                <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+                <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-0">
                     <a href="" class="text-decoration-none d-block d-lg-none">
-                        <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1>
+                        <span class="h1 text-uppercase text-dark bg-light px-2">Multi</span>
+                        <span class="h1 text-uppercase text-light bg-primary px-2 ml-n1">Shop</span>
                     </a>
                     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
@@ -117,18 +98,39 @@
                         <div class="navbar-nav mr-auto py-0">
                             <a href="{{url('/')}}" class="nav-item nav-link active">Home</a>
                             <a href="{{url('/items-all')}}" class="nav-item nav-link">Shop</a>
+
                             <a href="{{url('/contact-us')}}" class="nav-item nav-link">Contact</a>
                         </div>
+                        <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
 
+                            <a href="" class="btn px-0">
+                                <i class="fas fa-heart text-primary"></i>
+                                <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
+                            </a>
+                            <a href="{{url('/view-cart')}}" class="btn px-0 ml-3">
+                                <i class="fas fa-shopping-cart text-primary"></i>
+                                <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;"id="cart_count2">{{$cart_count}}</span>
+                            </a>
+                            @guest
+                            <a href="{{ url('/login') }}" class="btn px-0">
+                                Login
+                              </a>
+                            @else
+                            <a href="{{ url('/my-account') }}" class="btn px-0">
+                                My Account
+                              </a>
+                            @endif
+
+                        </div>
                     </div>
                 </nav>
-              @yield('carousel')
             </div>
         </div>
     </div>
+
     <!-- Navbar End -->
 
-
+    @yield('carousel')
     <div class="content-wrapper">
         @yield('content')
         <!-- /.content -->
@@ -138,7 +140,8 @@
         <div class="row px-xl-5 pt-5">
             <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
                 <a href="{{url('/')}}" class="text-decoration-none">
-                    <img src="{{url('site/img/logo.png')}}" width="60%">
+                    {{--  <img src="{{url('site/img/logo.png')}}" width="60%">  --}}
+                    <h1>LOGO</h1>
 
                 </a>
                 <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, New York, USA</p>

@@ -2,86 +2,89 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Models\Lesson;
 use App\Models\Product;
 use App\Models\ProductHistory;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
     //
-    public function categoryUI()
+    public function subjectUI()
     {
-        $categories = Category::all();
-        return view('products.category', compact('categories'));
+        $subjects = Subject::all();
+        return view('products.subject', compact('subjects'));
     }
-    public function categorySave(Request $request)
+    public function subjectSave(Request $request)
     {
-        $data = new Category();
+        $data = new Subject();
         $data->name =  $request->name;
         $data->created_by = Auth::user()->id;
         $data->save();
-        return back()->with('status', 'Category ceated');
+        return back()->with('status', 'Subject ceated');
+    }
+
+    public function subjectDeactivate($id)
+    {
+        Subject::where('id', $id)->update(['status' => 1]);
+        return back()->with('status', 'Subject deacivated');
+    }
+    public function subjectActivate($id)
+    {
+        Subject::where('id', $id)->update(['status' => 0]);
+        return back()->with('status', 'Subject acivated');
+    }
+
+
+    public function lessonUI()
+    {
+        $lessons = Lesson::all();
+        return view('products.lesson', compact('lessons'));
+    }
+    public function lessonSave(Request $request)
+    {
+        $data = new Lesson();
+        $data->name =  $request->name;
+        $data->created_by = Auth::user()->id;
+        $data->save();
+        return back()->with('status', 'Lesson ceated');
+    }
+    public function lessonDeactivate($id)
+    {
+        Lesson::where('id', $id)->update(['status' => 1]);
+        return back()->with('status', 'Subject deacivated');
+    }
+    public function lessonActivate($id)
+    {
+        Lesson::where('id', $id)->update(['status' => 0]);
+        return back()->with('status', 'Subject acivated');
     }
     public function createUI()
     {
-        $categories = Category::where('status', 0)->get();
-        return view('products.create', compact('categories'));
+        $subjects = Subject::where('status', 0)->get();
+        $lessons = Lesson::where('status', 0)->get();
+        return view('products.create', compact('subjects','lessons'));
     }
-    public function categoryDeactivate($id)
-    {
-        Category::where('id', $id)->update(['status' => 1]);
-        return back()->with('status', 'Category deacivated');
-    }
-    public function categoryActivate($id)
-    {
-        Category::where('id', $id)->update(['status' => 0]);
-        return back()->with('status', 'Category acivated');
-    }
-
     public function saveProduct(Request $request)
     {
         $hero_image = time() . '.' . request()->hero_image->extension();
         request()->hero_image->move(public_path('hero_image/'), $hero_image);
-        if (request()->image1) {
-            $image1 = time() . '.' . request()->image1->extension();
-            request()->image1->move(public_path('image1/'), $image1);
-        } else {
-            $image1 = null;
-        }
-        if (request()->image2) {
-            $image2 = time() . '.' . request()->image2->extension();
-            request()->image2->move(public_path('image2/'), $image2);
-        } else {
-            $image2 = null;
-        }
-        if (request()->image3) {
-            $image3 = time() . '.' . request()->image3->extension();
-            request()->image3->move(public_path('image3/'), $image3);
-        } else {
-            $image3 = null;
-        }
-        if (request()->image4) {
-            $image4 = time() . '.' . request()->image4->extension();
-            request()->image4->move(public_path('image4/'), $image4);
-        } else {
-            $image4 = null;
-        }
+
+
 
         $product = new Product();
         $product->title=$request->title;
-        $product->category=$request->category;
+        $product->subject=$request->subject;
+        $product->lesson=$request->lesson;
         $product->description=$request->description;
         $product->price=$request->price;
-        $product->weight=$request->weight;
+        $product->qty=$request->qty;
         $product->hero_image=$hero_image;
-        $product->image1=$image1;
-        $product->image2=$image2;
-        $product->image3=$image3;
-        $product->image4=$image4;
         $product->created_by=Auth::user()->id;
         $product->save();
+
         $product_history = new ProductHistory();
         $product_history->product_id = $product->id;
         $product_history->action= 'Create new product';
@@ -119,9 +122,10 @@ class ProductController extends Controller
         return back()->with('status', 'Product Activate');
     }
     public function edit($id){
-        $categories = Category::where('status', 0)->get();
+        $subjects = Subject::where('status', 0)->get();
+        $lessons = Lesson::where('status', 0)->get();
         $product=Product::where('id',$id)->first();
-        return view('products.edit',compact('product','categories'));
+        return view('products.edit',compact('product','subjects','lessons'));
 
     }
     public function update($id,Request $request)
@@ -135,43 +139,18 @@ class ProductController extends Controller
 
 
         }
-        if (request()->image1) {
-            $image1 = time() . '.' . request()->image1->extension();
-            request()->image1->move(public_path('image1/'), $image1);
-        } else {
-            $image1 = $product->image1;
-        }
-        if (request()->image2) {
-            $image2 = time() . '.' . request()->image2->extension();
-            request()->image2->move(public_path('image2/'), $image2);
-        } else {
-            $image2 = $product->image2;
-        }
-        if (request()->image3) {
-            $image3 = time() . '.' . request()->image3->extension();
-            request()->image3->move(public_path('image3/'), $image3);
-        } else {
-            $image3 = $product->image3;
-        }
-        if (request()->image4) {
-            $image4 = time() . '.' . request()->image4->extension();
-            request()->image4->move(public_path('image4/'), $image4);
-        } else {
-            $image4 = $product->image4;
-        }
+
 
 
         $product->title=$request->title;
-        $product->category=$request->category;
+        $product->subject=$request->subject;
+        $product->lesson=$request->lesson;
         $product->description=$request->description;
         $product->price=$request->price;
-        $product->weight=$request->weight;
+        $product->qty=$request->qty;
         $product->hero_image=$hero_image;
-        $product->image1=$image1;
-        $product->image2=$image2;
-        $product->image3=$image3;
-        $product->image4=$image4;
         $product->save();
+
         $product_history = new ProductHistory();
         $product_history->product_id = $product->id;
         $product_history->action= 'Update  product';

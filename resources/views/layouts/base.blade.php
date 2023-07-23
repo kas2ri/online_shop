@@ -202,13 +202,13 @@
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
                                     Dashboard
-                                    <span class="right badge badge-danger">New</span>
+
                                 </p>
                             </a>
                         </li>
                         <li
-                            class="nav-item {{ request()->is('products/*') ? 'menu-open' : '' }} {{ request()->is('products/*') ? 'active' : '' }}">
-                            <a href="#" class="nav-link">
+                            class="nav-item {{ request()->is('products/*') ? 'menu-open' : '' }} ">
+                            <a href="#" class="nav-link {{ request()->is('products') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-copy"></i>
                                 <p>
                                     Products
@@ -217,26 +217,62 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item {{ request()->is('products/category/*') ? 'active' : '' }}">
-                                    <a href="{{ url('products/category') }}" class="nav-link">
+                                <li class="nav-item ">
+                                    <a href="{{ url('products/subject') }}" class="nav-link  {{ request()->is('products/subject') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Category</p>
+                                        <p>Subject</p>
                                     </a>
                                 </li>
-                                <li class="nav-item {{ request()->is('products/create-new/*') ? 'active' : '' }}">
-                                    <a href="{{ url('products/create-new') }}" class="nav-link">
+                                <li class="nav-item ">
+                                    <a href="{{ url('products/lesson') }}" class="nav-link {{ request()->is('products/lesson') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>New Products</p>
+                                        <p>Lesson</p>
                                     </a>
                                 </li>
-                                <li class="nav-item {{ request()->is('products/all/*') ? 'active' : '' }}">
-                                  <a href="{{ url('products/all') }}" class="nav-link">
+                                <li class="nav-item ">
+                                    <a href="{{ url('products/create-new') }}" class="nav-link {{ request()->is('products/create-new') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>New Product</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
+                                  <a href="{{ url('products/all') }}" class="nav-link {{ request()->is('products/all') ? 'active' : '' }}">
                                       <i class="far fa-circle nav-icon"></i>
                                       <p>All Products</p>
                                   </a>
                               </li>
 
                             </ul>
+                        </li>
+                        <li
+                            class="nav-item {{ request()->is('members/*') ? 'menu-open' : '' }} ">
+                            <a href="#" class="nav-link {{ request()->is('members/*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
+                                    Members
+                                    <i class="fas fa-angle-left right"></i>
+
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item {{ request()->is('members/all/*') ? 'active' : '' }}">
+                                    <a href="{{ url('members/all') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>All Members</p>
+                                    </a>
+                                </li>
+
+
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ url('profit-distribution') }}" class="nav-link">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
+                                    Profit Distribution
+
+                                </p>
+                            </a>
                         </li>
                         <li
                             class="nav-item {{ request()->is('orders/*') ? 'menu-open' : '' }} {{ request()->is('orders/*') ? 'active' : '' }}">

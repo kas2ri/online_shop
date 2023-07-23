@@ -20,10 +20,19 @@ Route::get('admin', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('auth');
-Route::get('/products/category', [App\Http\Controllers\ProductController::class, 'categoryUI'])->middleware('auth');
-Route::post('/products/category-save', [App\Http\Controllers\ProductController::class, 'categorySave'])->middleware('auth');
-Route::get('/products/category-deactivate/{id}', [App\Http\Controllers\ProductController::class, 'categoryDeactivate'])->middleware('auth');
-Route::get('/products/category-activate/{id}', [App\Http\Controllers\ProductController::class, 'categoryActivate'])->middleware('auth');
+
+
+Route::get('/products/subject', [App\Http\Controllers\ProductController::class, 'subjectUI'])->middleware('auth');
+Route::post('/products/subject-save', [App\Http\Controllers\ProductController::class, 'subjectSave'])->middleware('auth');
+Route::get('/products/subject-deactivate/{id}', [App\Http\Controllers\ProductController::class, 'subjectDeactivate'])->middleware('auth');
+Route::get('/products/subject-activate/{id}', [App\Http\Controllers\ProductController::class, 'subjectActivate'])->middleware('auth');
+
+Route::get('/products/lesson', [App\Http\Controllers\ProductController::class, 'lessonUI'])->middleware('auth');
+Route::post('/products/lesson-save', [App\Http\Controllers\ProductController::class, 'lessonSave'])->middleware('auth');
+Route::get('/products/lesson-deactivate/{id}', [App\Http\Controllers\ProductController::class, 'lessonDeactivate'])->middleware('auth');
+Route::get('/products/lesson-activate/{id}', [App\Http\Controllers\ProductController::class, 'lessonActivate'])->middleware('auth');
+
+
 Route::get('/products/create-new', [App\Http\Controllers\ProductController::class, 'createUI'])->middleware('auth');
 Route::post('/products/save', [App\Http\Controllers\ProductController::class, 'saveProduct'])->middleware('auth');
 Route::get('/products/all', [App\Http\Controllers\ProductController::class, 'allProduct'])->middleware('auth');
@@ -42,7 +51,17 @@ Route::get('/order-handover/{id}', [App\Http\Controllers\OrderController::class,
 Route::get('/orders/status', [App\Http\Controllers\OrderController::class, 'orderStatus'])->middleware('auth');
 Route::get('/orders-status-mark/{id}', [App\Http\Controllers\OrderController::class, 'orderStatusMark'])->middleware('auth');
 
+Route::get('/members/all', [App\Http\Controllers\MemberController::class, 'allMembers'])->middleware('auth');
+Route::get('/members/activate/{id}', [App\Http\Controllers\MemberController::class, 'activeMember'])->middleware('auth');
+
+Route::get('/profit-distribution', [App\Http\Controllers\ProfitDistributionController::class, 'index'])->middleware('auth');
+Route::post('/profit-distribution/update', [App\Http\Controllers\ProfitDistributionController::class, 'update'])->middleware('auth');
 //site urls
+Route::get('join-shop/{id}', [App\Http\Controllers\PartnerController::class, 'joinShop']);
+Route::post('partner-register', [App\Http\Controllers\PartnerController::class, 'storePartner']);
+Route::get('my-account', [App\Http\Controllers\PartnerController::class, 'myAccount']);
+
+
 Route::get('/', [App\Http\Controllers\SiteController::class, 'index']);
 Route::get('/view-single-item/{id}', [App\Http\Controllers\SiteController::class, 'viewSingleItem']);
 Route::get('/items-all', [App\Http\Controllers\SiteController::class, 'viewAllItem']);

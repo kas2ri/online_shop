@@ -15,8 +15,9 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Image</th>
                                 <th scope="col">Title</th>
-                                <th scope="col">Category</th>
-                                <th scope="col">Price</th>
+                                <th scope="col">Subject</th>
+                                <th scope="col">Lesson</th>
+                                <th scope="col">Available QTY</th>
                                 <th scope="col">Action</th>
 
 
@@ -34,9 +35,15 @@
                                 <td>{{$product->title}}</td>
                                 <td>
                                     @php
-                                        $category = App\Models\Category::where('id',$product->category)->first();
+                                        $subject = App\Models\Subject::where('id',$product->subject)->first();
                                     @endphp
-                                    {{$category->name}}
+                                    {{$subject->name}}
+                                </td>
+                                <td>
+                                    @php
+                                        $lesson = App\Models\Lesson::where('id',$product->lesson)->first();
+                                    @endphp
+                                    {{$lesson->name}}
                                 </td>
                                 <td>{{number_format($product->price,2)}}</td>
                                 <td>

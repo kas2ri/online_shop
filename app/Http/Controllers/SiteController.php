@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Distribution;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\ParentDetail;
 use App\Models\Product;
 use App\Models\Review;
+use App\Models\UserProfit;
+use App\Models\UserTotalProfit;
 use Illuminate\Http\Request;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use  DB;
+use Illuminate\Support\Facades\Auth;
 use Svg\Tag\Rect;
 
 class SiteController extends Controller
@@ -119,6 +124,10 @@ class SiteController extends Controller
         return view('site.checkout',compact('items','cartTotal'));
     }
     public function orderConfirm(Request $request){
+        $user = Auth::user();
+        if(!$user){
+            return redirect('/login');
+        }
 
 
         //output: P00001
@@ -165,7 +174,71 @@ class SiteController extends Controller
 
 
            \Cart::clear();
+           $dist = Distribution::first();
+           $level_2 =null;
+           $level_3 = null;
+           $level_4 = null;
+           $level_5 = null;
+           $level_6 =null;
+           $direct_amount = (float)$total*((float)$dist->direct_selling/100);
+           $this->updateUserProfit($user->id,$direct_amount);
+           $this->storeUserProfit($user->id,$order->id,$dist->direct_selling,$direct_amount,1);
+           $level_2 = ParentDetail::where('user_id',$user->id)->first();
+           if($level_2){
+            $level2_amount = (float)$total*((float)$dist->level_2/100);
+            $this->updateUserProfit($level_2->user_id,$level2_amount);
+           $this->storeUserProfit($level_2->user_id,$order->id,$dist->level_2,$level2_amount,2);
+           $level_3 = ParentDetail::where('user_id',$level_2->parent_id)->first();
+           }
+           if($level_3){
+            $level3_amount = (float)$total*((float)$dist->level_3/100);
+            $this->updateUserProfit($level_3->user_id,$level3_amount);
+            $this->storeUserProfit($level_3->user_id,$order->id,$dist->level_3,$level3_amount,3);
+           $level_4 = ParentDetail::where('user_id',$level_3->parent_id)->first();
+           }
+           if($level_4){
+            $level4_amount = (float)$total*((float)$dist->level_4/100);
+            $this->updateUserProfit($level_4->user_id,$level4_amount);
+            $this->storeUserProfit($level_4->user_id,$order->id,$dist->level_4,$level4_amount,3);
+           $level_5 = ParentDetail::where('user_id',$level_4->parent_id)->first();
+           }
+           if($level_5){
+            $level5_amount = (float)$total*((float)$dist->level_5/100);
+            $this->updateUserProfit($level_5->user_id,$level5_amount);
+            $this->storeUserProfit($level_5->user_id,$order->id,$dist->level_5,$level5_amount,3);
+           $level_6 = ParentDetail::where('user_id',$level_5->parent_id)->first();
+           }
+           if($level_6){
+            $level6_amount = (float)$total*((float)$dist->level_6/100);
+            $this->updateUserProfit($level_6->user_id,$level6_amount);
+            $this->storeUserProfit($level_6->user_id,$order->id,$dist->level_6,$level6_amount,3);
+           }
+           //debit to direct selling
            return back();
+    }
+    public function storeUserProfit($user_id,$order_id,$perc,$total,$level){
+        $userProf = new UserProfit();
+        $userProf->user_id = $user_id;
+        $userProf->order_id = $order_id;
+        $userProf->level = $level;
+        $userProf->profit_percentage = $perc;
+        $userProf->value = $total;
+        $userProf->save();
+    }
+    public function updateUserProfit($user_id,$total){
+        $old_value =UserTotalProfit::where('user_id',$user_id)->first();
+        if($old_value){
+            $new_value =(float)$old_value->total_income+(float)$total;
+
+        }else{
+            $old_value = new UserTotalProfit();
+            $new_value =(float)$total;
+        }
+
+        $old_value->user_id = $user_id;
+        $old_value->total_income = $new_value;
+
+        $old_value->save();
     }
 
     public  function Searchcity(Request  $request)

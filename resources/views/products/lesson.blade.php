@@ -5,10 +5,10 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Create Category</div>
+                    <div class="card-header">Create Lesson</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{url('products/category-save')}}">
+                        <form method="POST" action="{{url('products/lesson-save')}}">
                             @csrf
 
                             <div class="form-group">
@@ -29,7 +29,7 @@
         <div class="row justify-content-center mt-4">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Categories</div>
+                    <div class="card-header">Lessons</div>
 
                     <div class="card-body">
                         <table class="table table-striped">
@@ -42,17 +42,17 @@
                               </tr>
                             </thead>
                             <tbody>
-                                @foreach ($categories as $category)
+                                @foreach ($lessons as $lesson)
 
 
                               <tr>
-                                <th scope="row">{{$category->id}}</th>
-                                <td>{{$category->name}}</td>
+                                <th scope="row">{{$lesson->id}}</th>
+                                <td>{{$lesson->name}}</td>
                                 <td>
-                                    @if($category->status == 0)
-                                    <a href="{{('/products/category-deactivate/'.$category->id)}}" class="btn btn-danger btn-sm">Deactivate</a>
+                                    @if($lesson->status == 0)
+                                    <a href="{{('/products/lesson-deactivate/'.$lesson->id)}}" class="btn btn-danger btn-sm">Deactivate</a>
                                     @else
-                                    <a href="{{('/products/category-activate/'.$category->id)}}" class="btn btn-primary btn-sm">Activate</a>
+                                    <a href="{{('/products/lesson-activate/'.$lesson->id)}}" class="btn btn-primary btn-sm">Activate</a>
                                     @endif
                                 </td>
 

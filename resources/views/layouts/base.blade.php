@@ -220,15 +220,15 @@
                                 <li class="nav-item ">
                                     <a href="{{ url('products/subject') }}" class="nav-link  {{ request()->is('products/subject') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Subject</p>
+                                        <p>Category</p>
                                     </a>
                                 </li>
-                                <li class="nav-item ">
+                                <!-- <li class="nav-item ">
                                     <a href="{{ url('products/lesson') }}" class="nav-link {{ request()->is('products/lesson') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Lesson</p>
                                     </a>
-                                </li>
+                                </li> -->
                                 <li class="nav-item ">
                                     <a href="{{ url('products/create-new') }}" class="nav-link {{ request()->is('products/create-new') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>

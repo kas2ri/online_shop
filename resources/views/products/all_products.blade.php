@@ -15,8 +15,8 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Image</th>
                                 <th scope="col">Title</th>
-                                <th scope="col">Subject</th>
-                                <th scope="col">Lesson</th>
+                                <th scope="col">Category</th>
+                                <!-- <th scope="col">Lesson</th> -->
                                 <th scope="col">Available QTY</th>
                                 <th scope="col">Action</th>
 
@@ -39,12 +39,7 @@
                                     @endphp
                                     {{$subject->name}}
                                 </td>
-                                <td>
-                                    @php
-                                        $lesson = App\Models\Lesson::where('id',$product->lesson)->first();
-                                    @endphp
-                                    {{$lesson->name}}
-                                </td>
+                                
                                 <td>{{number_format($product->price,2)}}</td>
                                 <td>
                                     @if($product->status == 0)

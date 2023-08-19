@@ -17,7 +17,7 @@
                                         placeholder="Tile" value="{{$product->title}}" required>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputPassword4">Subject*</label>
+                                    <label for="inputPassword4">Categories*</label>
                                     <select class="form-control" name="subject" required>
                                         @foreach ($subjects as $subject)
                                             <option value="{{ $subject->id }}" {{$product->subject == $subject->id ? 'selected' : ''}}>{{ $subject->name }}</option>
@@ -32,7 +32,7 @@
                                 <label for="inputAddress">Description</label>
                                 <textarea class="form-control" name="description">{{$product->description}}</textarea>
                             </div>
-                            <div class="form-group col-md-6">
+                            <!-- <div class="form-group col-md-6">
                                 <label for="inputPassword4">Lesson*</label>
                                 <select class="form-control" name="lesson" required>
                                     @foreach ($lessons as $lesson)
@@ -40,7 +40,7 @@
                                     @endforeach
 
                                 </select>
-                            </div>
+                            </div> -->
                             </div>
 
 

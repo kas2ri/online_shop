@@ -46,9 +46,84 @@
                     <div class="row">
                         <h3>Profile</h3>
 
-
+                    
 
                     </div>
+
+                    <form name="sentMessage" action="{{ url('partner-register') }}"  novalidate="novalidate" method="POST">
+                    @csrf
+                    <div class="control-group">
+                        <input type="text" class="form-control" id="name" placeholder="Your Name"
+                            required="required" name="name" value="{{ $partner->name }}" data-validation-required-message="Please enter your name" />
+                        <p class="help-block text-danger"></p>
+                        @if(isset($user))
+                        <input type="hidden" name="parent_id" value="{{ $user->id }}">
+                       
+                        @endif
+                    </div>
+                    <div class="control-group">
+                        <input type="email" class="form-control" id="email" placeholder="Your Email"
+                            required="required" name="email" value="{{ $partner->email }}" data-validation-required-message="Please enter your email" />
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <div class="control-group">
+                        <input type="text" class="form-control" id="phone" placeholder="Phone Number 01"
+                            required="required" name="phone1" value="{{ $partner->phone1 }}" data-validation-required-message="Please enter your phone" />
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <div class="control-group">
+                        <input type="text" class="form-control" id="phone" name="phone2" value="{{ $partner->phone2 }}" placeholder="Phone Number 02" />
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <div class="control-group">
+                        <input type="text" class="form-control" id="id_number"  name="id_number" value="{{ $partner->id_number }}" placeholder="ID Number" />
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <div class="control-group">
+                        @if(isset($id))
+                            <input type="text" class="form-control" id="reference_number" name="reference_number" value="{{ $partner->id_number }}" placeholder="Reference number" value="{{$id}}" readonly/>
+                        @else
+                            <input type="text" class="form-control" id="reference_number" name="reference_number" value="{{ $partner->id_number }}" placeholder="Reference number" />
+                            
+                        
+                        @endif
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <div class="control-group mt-3">
+                      <select class="form-control" name="province" required>
+                        <option value="">Select Province</option>
+                        @foreach ($provinces as $province)
+                        <option value="{{ $province->id }}">{{ $province->name_en }}</option>
+
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="control-group mt-3">
+                        <select class="form-control" name="district" required>
+                          <option value="">Select Distric</option>
+                          @foreach ($districts as $district)
+                          <option value="{{ $district->id }}">{{ $district->name_en }}</option>
+
+                          @endforeach
+                        </select>
+                      </div>
+                      <div class="control-group mt-3">
+                        <select class="form-control" name="city" required>
+                          <option value="">Select City</option>
+                          @foreach ($cities as $city)
+                          <option value="{{ $city->id }}">{{ $city->name_en }}</option>
+
+                          @endforeach
+                        </select>
+                      </div>
+                      <div class="control-group mt-3">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" />
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary py-2 px-4 mt-3" type="submit" >Register Now</button>
+                    </div>
+                </form>
 
                 </div>
 

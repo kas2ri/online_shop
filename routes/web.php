@@ -58,6 +58,7 @@ Route::get('/profit-distribution', [App\Http\Controllers\ProfitDistributionContr
 Route::post('/profit-distribution/update', [App\Http\Controllers\ProfitDistributionController::class, 'update'])->middleware('auth');
 //site urls
 Route::get('join-shop/{id}', [App\Http\Controllers\PartnerController::class, 'joinShop']);
+Route::get('join-shop', [App\Http\Controllers\PartnerController::class, 'registerShop']);
 Route::post('partner-register', [App\Http\Controllers\PartnerController::class, 'storePartner']);
 Route::get('my-account', [App\Http\Controllers\PartnerController::class, 'myAccount']);
 

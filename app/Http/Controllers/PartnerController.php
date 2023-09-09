@@ -18,13 +18,24 @@ class PartnerController extends Controller
             $provinces = DB::table('provinces')->get();
             $districts = DB::table('districts')->get();
             $cities = DB::table('cities')->get();
-            return view('site.partner.register',compact('user','provinces','districts','cities'));
+            return view('site.partner.register',compact('user','provinces','districts','cities','id'));
 
         }else{
             return back()->with('error','Invalid URL');
 
         }
     }
+
+    public function registerShop(){
+       
+        $provinces = DB::table('provinces')->get();
+        $districts = DB::table('districts')->get();
+        $cities = DB::table('cities')->get();
+        
+        return view('site.partner.register',compact('provinces','districts','cities'));
+
+    }
+
     public function myAccount(){
         $user = Auth::user();
         $partner = Partner::where('email',$user->email)->first();
@@ -46,6 +57,13 @@ class PartnerController extends Controller
         $partner->district = $request->district;
         $partner->city = $request->city;
         $partner->password = $request->password;
+
+        $checkUrlKey = User::where('url_key','like','%'.$request->reference_number.'%')->first();
+
+        if($checkUrlKey){
+            $partner->reference_number = $request->reference_number;
+        }
+        
         $partner->save();
         return back()->with('success','Join Requested, Admin will review the request');
     }

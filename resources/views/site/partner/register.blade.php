@@ -12,7 +12,10 @@
                         <input type="text" class="form-control" id="name" placeholder="Your Name"
                             required="required" name="name" data-validation-required-message="Please enter your name" />
                         <p class="help-block text-danger"></p>
+                        @if(isset($user))
                         <input type="hidden" name="parent_id" value="{{ $user->id }}">
+                       
+                        @endif
                     </div>
                     <div class="control-group">
                         <input type="email" class="form-control" id="email" placeholder="Your Email"
@@ -30,6 +33,16 @@
                     </div>
                     <div class="control-group">
                         <input type="text" class="form-control" id="id_number"  name="id_number" placeholder="ID Number" />
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <div class="control-group">
+                        @if(isset($id))
+                            <input type="text" class="form-control" id="reference_number" name="reference_number" placeholder="Reference number" value="{{$id}}" readonly/>
+                        @else
+                            <input type="text" class="form-control" id="reference_number" name="reference_number" placeholder="Reference number" />
+                            
+                        
+                        @endif
                         <p class="help-block text-danger"></p>
                     </div>
                     <div class="control-group mt-3">
